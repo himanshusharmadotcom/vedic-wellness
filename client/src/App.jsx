@@ -9,10 +9,13 @@ import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
 import UpdatePost from './pages/UpdatePost'
 import Contact from './pages/Contact'
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 export default function App() {
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
         <Route>
           <Route path='/' element={<Home />}></Route>
@@ -26,6 +29,7 @@ export default function App() {
           <Route path='/update-post' element={<UpdatePost />}></Route>
         </Route>
       </Routes>
+      <Footer />
     </BrowserRouter>
   )
 }
