@@ -1,9 +1,33 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom';
+import React, { useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import DashSidebar from '../components/DashSidebar';
+import { useDispatch } from 'react-redux';
+import { loggedOutUser } from '../redux/user/userSlice.js';
+import axios from 'axios'
 
 export default function DashProfile() {
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const [errorMessage, setErrorMessage] = useState(null)
+
+  const handleSignOut = async () => {
+    try {
+      setErrorMessage(null)
+      const res = await axios.post('/api/auth/signout')
+
+      if (res.status === 200) {
+        dispatch(loggedOutUser())
+        navigate('/')
+      } else {
+        setErrorMessage(res.data)
+      }
+    } catch (error) {
+      setErrorMessage(error.message)
+    }
+  }
+
   return (
     <Wrapper>
       <div className="dashboard-sidebar">
@@ -28,10 +52,10 @@ export default function DashProfile() {
           </form>
           <div className="form-bottom">
             <NavLink>Delete Account</NavLink>
-            <NavLink>Sign Out</NavLink>
+            <NavLink onClick={handleSignOut}>Sign Out</NavLink>
           </div>
           <div className="error-status">
-            <p></p>
+            <p>{errorMessage}</p>
           </div>
         </div>
       </div>

@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom';
 import logo from '../assets/images/logo.png'
-import { RiMenuFoldLine } from "react-icons/ri";
-import { RiMenuUnfoldLine } from "react-icons/ri";
+import { useSelector } from 'react-redux';
 
 export default function HeaderHome() {
 
   const [showMenu, setShowMenu] = useState(false);
+  const user = useSelector(state => state.user)
+
+  console.log(user)
 
   return (
     <Header>
@@ -44,7 +46,7 @@ export default function HeaderHome() {
               </ul>
             </div>
             <div className="access-panel">
-              <NavLink className='btn' to='/sign-in'>Sign In/Sign Up</NavLink>
+              {user.isLoggedIn ? <NavLink className='btn' to='/dashboard'>{user.currentUser.username}</NavLink> : <NavLink className='btn' to='/sign-in'>Sign In/Sign Up</NavLink>}
             </div>
             <div className="mn-toggler">
               <NavLink className='btn' onClick={() => setShowMenu(true)}>MENU</NavLink>

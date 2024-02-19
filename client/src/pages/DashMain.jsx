@@ -11,6 +11,7 @@ import { MdOutlinePostAdd } from "react-icons/md";
 import { ResponsiveContainer, BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 import { CustomTooltip } from '../components/CustomTooltip';
 import DashSidebar from '../components/DashSidebar';
+import { useSelector } from 'react-redux';
 
 const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'red', 'pink'];
 
@@ -47,6 +48,9 @@ const TriangleBar = (props) => {
 };
 
 export default function DashMain() {
+
+  const user = useSelector(state => state.user)
+
   return (
     <Wrapper>
       <div className="dashboard-sidebar">
@@ -57,7 +61,7 @@ export default function DashMain() {
           <div className="left-span">
             <video src={dashMainVideo} muted autoPlay loop></video>
             <div className="overlay">
-              <h1>Hi, User!</h1>
+              <h1>Hi, {user.isLoggedIn ? user.currentUser.username : 'User'}</h1>
             </div>
           </div>
           <div className="right-span">
